@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7858587812255611762}
   - component: {fileID: 1862606527763571581}
   - component: {fileID: 6536401402988895638}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,6 +91,7 @@ MonoBehaviour:
   viewCamera: {fileID: 0}
   moveSpeed: 6
   gravity: 20
+  _currentHealth: 3
 --- !u!114 &1862606527763571581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6591751528756689678}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7119933379643117815}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +199,7 @@ GameObject:
   - component: {fileID: 1092192652688680070}
   - component: {fileID: 7272148232218532767}
   - component: {fileID: 7584997823563522607}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Facing Marker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,7 +289,7 @@ GameObject:
   - component: {fileID: 5060135042982970241}
   - component: {fileID: 5902601269199157306}
   - component: {fileID: 3631036799741925629}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}

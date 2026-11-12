@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
-    PlayerAttack _playerAttack;
-
     private ProjectileManager _projectileManager;
+    private GameObjectPool<ProjectileController> _projectilePool;
     private bool _isInPool;
 
     Vector3 _prevPos;
@@ -15,11 +14,15 @@ public class ProjectileController : MonoBehaviour
     int _hash_Wall;
     int _hash_Enemy;
 
-    internal void InitProjectile(ProjectileManager projManager)
+    public Vector3 CurrentPos => _currentPos;
+
+    internal void InitProjectile(ProjectileManager projManager, GameObjectPool<ProjectileController> projectilePool = null)
     {
         if (projManager == null) return;
 
         _projectileManager = projManager;
+        if (projectilePool != null)
+            _projectilePool = projectilePool;
         _isInPool = true;
     }   
 
@@ -35,13 +38,19 @@ public class ProjectileController : MonoBehaviour
     {
         if(_projectileManager == null) return;
 
+        if (_rb != null)
+        {
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+        }
+
         transform.position = position;
         _prevPos = position;
         _isInPool = false;
         gameObject.SetActive(true);
     }
 
-    public void CheckHit()
+    public void CheckHitEnemy()
     {
         _currentPos = transform.position;
 
@@ -51,9 +60,19 @@ public class ProjectileController : MonoBehaviour
         if (distance > 0f)
         {
             Vector3 dir = moveDirection.normalized;
-            if (Physics.Raycast(_prevPos,dir,out RaycastHit hit, distance, _hash_Wall) ||
-                Physics.Raycast(_prevPos, dir, out hit, distance, _hash_Enemy))
+            bool didHit = Physics.Raycast(_prevPos, dir, out RaycastHit hit, distance, _hash_Wall) ||
+                Physics.Raycast(_prevPos, dir, out hit, distance, _hash_Enemy);
+            Debug.DrawRay(_prevPos, dir * distance, didHit ? Color.green : Color.red);
+
+            if (didHit)
             {
+                EnemyController enemy = hit.collider.GetComponent<EnemyController>();
+
+                if(enemy != null)
+                {
+                    enemy.HitBullet(this);
+                }
+
                 ReturnToPool();
                 return;
             }
@@ -65,16 +84,18 @@ public class ProjectileController : MonoBehaviour
     public void ReturnToPool()
     {
         if (_isInPool) return;
-        if (_projectileManager == null) return;
-        if (_projectileManager.ProjectilePool == null) return;
+        if (_projectilePool == null) return;
 
         _isInPool = true;
 
-        _rb.linearVelocity = Vector3.zero;
-        _rb.angularVelocity = Vector3.zero;
+        if (_rb != null)
+        {
+            _rb.linearVelocity = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+        }
 
         gameObject.SetActive(false);
-        _projectileManager.ProjectilePool.Set(this);
+        _projectilePool.Set(this);
     }
 
     void Awake()
@@ -87,6 +108,6 @@ public class ProjectileController : MonoBehaviour
 
     void Update()
     {
-        CheckHit();
+        CheckHitEnemy();
     }
 }

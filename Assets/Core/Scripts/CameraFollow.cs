@@ -14,7 +14,6 @@ public sealed class CameraFollow : MonoBehaviour
     {
         if (target == null)
         {
-            Debug.LogError("CameraFollow requires a target Transform.", this);
             enabled = false;
             return;
         }
@@ -26,10 +25,7 @@ public sealed class CameraFollow : MonoBehaviour
     {
         Vector3 targetPosition = target.position + cameraOffset;
 
-        transform.position = Vector3.SmoothDamp(
-            transform.position,
-            targetPosition,
-            ref followVelocity,
-            smoothTime);
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition,
+            ref followVelocity, smoothTime);
     }
 }
