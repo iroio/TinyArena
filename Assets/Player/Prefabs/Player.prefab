@@ -87,11 +87,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00fd082271102034d9e4b2e842133650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  _damageManager: {fileID: 0}
   inputReader: {fileID: 8267579877090365036}
   viewCamera: {fileID: 0}
   moveSpeed: 6
   gravity: 20
-  _currentHealth: 3
 --- !u!114 &1862606527763571581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +254,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: d38fd7a4468a9b248a1241f43c2b5aa7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
